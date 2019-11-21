@@ -4,7 +4,7 @@ import scala.util.{Failure, Success, Try}
 import play.api.libs.json.{JsObject, JsValue, Json}
 
 object PostmanParser extends App {
-  val postman_collections = "Postman_Echo.postman_collection.json"
+  val postman_collections = "./Postman_Echo.postman_collection.json"
   val jsonifiedString = scala.io.Source.fromFile(postman_collections).mkString
   val myJsonData = Try(Json.parse(jsonifiedString)).map(_.as[RootInterface])
 
