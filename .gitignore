@@ -1,6 +1,7 @@
 
+/temp
+
 /.idea
-/project
 /target
 
 *.class
