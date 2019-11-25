@@ -8,14 +8,19 @@ import scala.util.Try
 object PostmanParser extends App {
   val postman_collections = "./resources/Postman_Echo.postman_collection.json"
   val jsonifiedString = scala.io.Source.fromFile(postman_collections).mkString
-  val myJsonData = Try(Json.parse(jsonifiedString)).map(_.as[RootInterface])
+  val postman_collections_json =
+    Try(Json.parse(jsonifiedString)).map(_.as[RootInterface])
 
-  myJsonData match {
+  postman_collections_json match {
     case Success(myValue) => // compare your case class here
 
-        println(myValue.info._postman_id)
-    case Failure(err) => println("none")
+      println(myValue.info._postman_id)
+      println(myValue.item(0).item(0).response(0).originalRequest)
 
-      throw new Exception("couldnt parse: ",err)
+    case Failure(err) =>
+      println("none")
+
+      throw new Exception("couldnt parse: ", err)
   }
+
 }
