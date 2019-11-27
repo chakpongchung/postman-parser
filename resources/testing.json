@@ -1,0 +1,86 @@
+{
+  "info": {
+    "_postman_id": "5f1be11d-2337-4e15-91d5-d6eda0bc0cb6",
+    "name": "testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "folder1",
+      "item": [
+        {
+          "name": "testinglog",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJFUzI1NiIsImtpZCI6ImVjZHNha2V5MSIsIng1dCI6ImFUaDM0UXN2VG9XR2ExbU0zcHdIMEpkWXJFSSJ9.eyJzY29wZSI6W10sImNsaWVudF9pZCI6ImRmX2luZ2VzdGlvbl9jYyIsImlzcyI6Imh0dHBzOi8vZmVkc3NvZGV2LmVxdWlmYXguY29tIiwiYXVkIjoiZWZ4OmRmOmRhdGFjYXRhbG9nIiwianRpIjoiQ0FVek9KYlpHbXhMQlVjNSIsImV4cCI6MTU2Mjg2Njc4OH0.G8tQYNPfDYHheMPgQo_csEUp5krCr8AINyrl1qeottMwxMmn6diJBD0H1Y9kHyJ2hzpcHeJAPspZijNcH6dpsw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-CRSFHeader",
+                "value": "f4f3060c-481e-4837-b55f-30f2d251e436",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "\n{\n\"filter\":\"logName=projects/df-sre-tools-npe-fbfc/logs/stdout\"\n}"
+            },
+            "url": {
+              "raw": "localhost:9000/v1/posts/omar",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "v1",
+                "posts",
+                "omar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "justForTesting",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:9000/v1/posts/omar",
+              "host": [
+                "localhost"
+              ],
+              "port": "9000",
+              "path": [
+                "v1",
+                "posts",
+                "omar"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "protocolProfileBehavior": {}
+    }
+  ],
+  "protocolProfileBehavior": {}
+}

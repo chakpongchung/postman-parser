@@ -1,3 +1,19 @@
+// Copyright (C) 2011-2012 the original author or authors.
+// See the LICENCE.txt file distributed with this work for additional
+// information regarding copyright ownership.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package postman
 
 import play.api.libs.json.Format
@@ -20,14 +36,16 @@ object Event {
 
 case class Info(_postman_id: String,
                 name: String,
-                description: String,
+                description: Option[String],
                 schema: String)
 
 object Info {
   implicit val format: Format[Info] = Json.format
 }
 
-case class Item(name: String, item: Seq[Item1], description: Option[String])
+case class Item(name: String,
+                item: Option[Seq[Item1]],
+                description: Option[String])
 
 object Item {
   implicit val format: Format[Item] = Json.format
@@ -37,7 +55,7 @@ object Item {
 // then Response, TODO
 case class Item1(
   name: String,
-  event: Seq[Event],
+  event: Option[Seq[Event]],
   request: Request,
   response: Seq[Response] //"response": [], cannot be Seq[Option[Response]], why?
 )
@@ -141,45 +159,4 @@ case class Query(key: String, value: Option[String] = null)
 
 object Query {
   implicit val format: Format[Query] = Json.format
-}
-
-object PathAdditions {
-  implicit class PathAdditions(path: JsPath) {
-
-    def readNullableIterable[A <: Iterable[_]](
-      implicit reads: Reads[A]
-    ): Reads[A] =
-      Reads(
-        (json: JsValue) =>
-          path
-            .applyTillLast(json)
-            .fold(
-              error => error,
-              result =>
-                result.fold(invalid = (_) => reads.reads(JsArray()), valid = {
-                  case JsNull => reads.reads(JsArray())
-                  case js     => reads.reads(js).repath(path)
-                })
-          )
-      )
-
-    def writeNullableIterable[A <: Iterable[_]](
-      implicit writes: Writes[A]
-    ): OWrites[A] =
-      OWrites[A] { (a: A) =>
-        if (a.isEmpty) Json.obj()
-        else JsPath.createObj(path -> writes.writes(a))
-      }
-
-    /** When writing it ignores the property when the collection is empty,
-      * when reading undefined and empty jsarray becomes an empty collection */
-    def formatNullableIterable[A <: Iterable[_]](
-      implicit format: Format[A]
-    ): OFormat[A] =
-      OFormat[A](
-        r = readNullableIterable(format),
-        w = writeNullableIterable(format)
-      )
-
-  }
 }
