@@ -9,7 +9,7 @@ object PostmanParser extends App {
   val postman_collections = "./resources/Postman_Echo.postman_collection.json"
   val jsonifiedString = scala.io.Source.fromFile(postman_collections).mkString
   val postman_collections_json =
-    Try(Json.parse(jsonifiedString)).map(_.as[RootInterface])
+    Try(Json.parse(jsonifiedString)).map(_.as[PostmanSchema])
 
   postman_collections_json match {
     case Success(myValue) => // compare your case class here

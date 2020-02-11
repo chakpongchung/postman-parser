@@ -12,6 +12,14 @@ import play.api.libs.json.Reads
 import play.api.libs.json.Writes
 import play.api.libs.functional.syntax._
 
+
+case class PostmanSchema(info: Info, item: Seq[Item])
+
+object PostmanSchema {
+  implicit val format: Format[PostmanSchema] = Json.format
+}
+
+
 case class Event(listen: String, script: Script)
 
 object Event {
@@ -112,11 +120,7 @@ object Header {
   implicit val format: Format[Header] = Json.format
 }
 
-case class RootInterface(info: Info, item: Seq[Item])
 
-object RootInterface {
-  implicit val format: Format[RootInterface] = Json.format
-}
 
 case class Script(
                   //                   id: String,
