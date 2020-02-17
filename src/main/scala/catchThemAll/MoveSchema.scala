@@ -2,34 +2,33 @@ package catchThemAll
 
 import play.api.libs.json.{Format, Json}
 
-//
-//{
-//"num": 719,
-//"accuracy": true,
-//"basePower": 195,
-//"category": "Special",
-//"desc": "Has a very high chance for a critical hit.",
-//"shortDesc": "Very high critical hit ratio.",
-//"id": "10000000voltthunderbolt",
-//"isNonstandard": "Past",
-//"isViable": true,
-//"name": "10,000,000 Volt Thunderbolt",
-//"pp": 1,
-//"priority": 0,
-//"flags": {},
-//"isZ": "pikashuniumz",
-//"critRatio": 3,
-//"secondary": null,
-//"target": "normal",
-//"type": "Electric",
-//"contestType": "Cool"
-//},
-case class MoveSchema(num:Int
-//                      , accuracy:Either[Int, Boolean]
-                     )
+case class MoveSchema(num: Int,
+                      accuracy: Either[Int, Boolean],
+                      basePower: Int,
+                      category: String,
+                      desc: Option[String],
+                      shortDesc: String,
+                      id: String,
+                      isNonstandard: Option[String],
+                      isViable: Option[Boolean],
+                      name: String,
+                      pp: Int,
+                      priority: Int,
+                      flags: Flags,
+                      secondary: Option[Either[Boolean, Secondary]])
 
+case class Flags(authentic: Option[Int], bite: Option[Int])
+
+case class Secondary(chance: Option[Int],
+                     volatileStatus: Option[String],
+                     boosts: Option[Boosts],
+                     self: Option[Self],
+                     status: Option[String])
+
+case class Boosts(atk: Option[Int], `def`: Option[Int])
+
+case class Self(boosts: Option[Boosts])
 
 object MoveSchema {
   implicit val format: Format[MoveSchema] = Json.format
 }
-
